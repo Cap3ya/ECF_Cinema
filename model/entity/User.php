@@ -10,7 +10,7 @@ class User
     private $email;
     private $password;
 
-    public function __construct($id, $username, $email, $password)
+    public function __construct(int $id, string $username, string $email, string $password)
     {
         $this->setId($id);
         $this->setUsername($username);
