@@ -1,14 +1,14 @@
 <?php
 
-use Model\repository\OffreDAO;
+use Model\repository\FilmDAO;
 
 //On appelle la fonction getAll()
-$offreDao = new OffreDAO();
+$filmDao = new FilmDAO();
 
-$offres = $offreDao->getAll();
+$film = $filmDao->getAll();
 
 unset($_SESSION['user']);
 // $_SESSION['user'] = 'vince@afpa.com';
 
 //On affiche le template Twig correspondant
-echo $twig->render('home.html.twig', ['offres' => $offres]);
+echo $twig->render('home.html.twig', ['film' => $film]);
