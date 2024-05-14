@@ -6,12 +6,18 @@ class Role
 {
 
     private $id;
+    private $acteur;
     private $personnage;
 
-    public function __construct($id, $personnage)
+    public function __construct(
+        int $id,
+        Acteur $acteur, 
+        string $personnage
+    )
     {
         $this->setId($id);
-        $this->setpersonnage($personnage);
+        $this->setActeur($acteur);
+        $this->setPersonnage($personnage);
     }
 
     public function setId($id)
@@ -32,5 +38,15 @@ class Role
     public function getPersonnage()
     {
         return $this->personnage;
+    }
+
+    public function setActeur($acteur)
+    {
+        $this->acteur = $acteur;
+    }
+
+    public function getActeur()
+    {
+        return $this->acteur;
     }
 }
