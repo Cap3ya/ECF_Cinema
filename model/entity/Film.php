@@ -2,56 +2,70 @@
 
 namespace Model\entity;
 
-/**
- * Description of Offre
- *
- */
-class Offre
+
+class Film
 {
 
     private $id;
-    private $title;
-    private $description;
+    private $titre;
+    private $realisateur;
+    private $affiche;
+    private $annee;
 
-    public function __construct($id, $title, $description)
+    public function __construct($id, $titre, $realisateur,$affiche,$annee)
     {
         $this->setId($id);
-        $this->setTitle($title);
-        $this->setDescription($description);
+        $this->setTitle($titre);
+        $this->setRealisateur($realisateur);
+        $this->setAffiche($affiche);
+        $this->setAnne($annee);
     }
 
-    public function getTitle()
+    public function getTitre()
     {
-        return $this->title;
+        return $this->titre;
     }
 
-    public function getDescription()
+    public function setTitle($titre)
     {
-        return $this->description;
+        $this->titre = $titre;
     }
 
-    public function setTitle($title)
+    public function getRealisateur()
     {
-        $this->title = $title;
+        return $this->realisateur;
     }
 
-    public function setDescription($description)
+    public function setRealisateur($realisateur)
     {
-        $this->description = $description;
+        $this->$realisateur = $realisateur;
     }
 
-    /**
-     * Get the value of id
-     */
+    public function getAffiche()
+    {
+        return $this->affiche;
+    }
+
+    public function setAffiche($affiche)
+    {
+        $this->affiche = $affiche;
+    }
+
+    public function getAnne()
+    {
+        return $this->annee;
+    }
+    
+    public function setAnne($annee)
+    {
+        $this->annee = $annee;
+    }
+
     public function getId()
     {
         return $this->id;
     }
 
-    /**
-     * Set the value of id
-     *
-     */
     public function setId($id)
     {
         $this->id = $id;
