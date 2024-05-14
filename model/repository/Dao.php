@@ -24,15 +24,15 @@ abstract class Dao
     //Récupérer toutes les items
     abstract public static function getAll(): array;
 
-    //Récupérer plus d'info sur 1 item à l'aide de son id
-    abstract public static function getOne(int $id): Object;
-
     //Ajouter un item
     abstract public static function addOne(Object $data): bool;
 
+    //Récupérer plus d'info sur 1 item à l'aide de son id
+    //abstract public static function getOne(int $id): Object;
+
     //Supprimer un item
-    abstract public static function deleteOne(int $id): bool;
+    //abstract public static function deleteOne(int $id): bool;
 
     //Modifier un item
-    abstract public static function updateOne(Object $data): bool;
+    //abstract public static function updateOne(Object $data): bool;
 }
