@@ -12,12 +12,12 @@ class FilmDAO extends Dao
     public static function getAll(): array
     {
 
-        $query = self::$bdd->prepare("SELECT id, titre, realisateur, affichage, annee, role, acteur description FROM film");
+        $query = self::$bdd->prepare("SELECT id, titre, realisateur, affichage, annee, roles description FROM film");
         $query->execute();
         $film = array();
 
         while ($data = $query->fetch()) {
-            $offres[] = new Film($data['id'], $data['titre'], $data['realisateur'], $data['affichage'], $data['annee'], $data['role']);
+            $offres[] = new Film($data['id'], $data['titre'], $data['realisateur'], $data['affichage'], $data['annee'], $data['roles']);
         }
         return ($film);
     }
@@ -26,8 +26,8 @@ class FilmDAO extends Dao
     public static function addOne($data): bool
     {
 
-        $requete = 'INSERT INTO film (titre, realisateur, affichage, annee, role, acteur) VALUES (:titre , :realisateur , :affiachage , :annee, :role, :role)';
-        $valeurs = ['titre' => $data->getTitre(), 'realisateur' => $data->getRealisateur(), 'affichage' => $data->getAffichage(), 'annee' => $data->getAnnee(), 'role' => $data->getRole(), 'acteur' => $data->getActeur()];
+        $requete = 'INSERT INTO film (titre, realisateur, affichage, annee, roles) VALUES (:titre , :realisateur , :affiachage , :annee, :roles)';
+        $valeurs = ['titre' => $data->getTitre(), 'realisateur' => $data->getRealisateur(), 'affichage' => $data->getAffichage(), 'annee' => $data->getAnnee(), 'roles' => $data->getRoles()];
         $insert = self::$bdd->prepare($requete);
         return $insert->execute($valeurs);
     }
@@ -38,7 +38,7 @@ class FilmDAO extends Dao
         $query = self::$bdd->prepare('SELECT * FROM film WHERE id = :id_film');
         $query->execute(array(':id_film' => $id));
         $data = $query->fetch();
-        return new Film($data['id'], $data['titre'], $data['realisateur'], $data['affichage'], $data['annee'], $data['role'], $data['acteur']);
+        return new Film($data['id'], $data['titre'], $data['realisateur'], $data['affichage'], $data['annee'], $data['roles']);
     }
 
    
