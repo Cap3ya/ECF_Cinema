@@ -10,4 +10,4 @@ Compétences visées:
 
 Made in Php, Twig (Symfony) et MySQL,
 
-Par Elna, Mickael et Yan.
+Par [Elna](https://https://github.com/eselene), [Mickael](https://https://github.com/VaneKaista) et Yan.
