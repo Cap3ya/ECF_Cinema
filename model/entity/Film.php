@@ -6,14 +6,16 @@ namespace Model\entity;
 class Film
 {
 
+    private $role;
     private $id;
     private $titre;
     private $realisateur;
     private $affiche;
     private $annee;
 
-    public function __construct($id, $titre, $realisateur,$affiche,$annee)
+    public function __construct(int $id,string $titre,string $realisateur,string $affiche,string $annee,Role ...$role,)
     {
+        $this->setRole($role);
         $this->setId($id);
         $this->setTitre($titre);
         $this->setRealisateur($realisateur);
@@ -70,4 +72,15 @@ class Film
     {
         $this->id = $id;
     }
+
+    public function getRole()
+    {
+        return $this->role;
+    }
+
+    public function setRole($role)
+    {
+        $this->role = $role;
+    }
+
 }
