@@ -1,5 +1,6 @@
 <?php
 // Creé par Eviougeas le 13/5/2024
+namespace Model\entity;
 class Acteur
 {
     private $id;
