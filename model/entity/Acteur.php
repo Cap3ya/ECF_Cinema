@@ -32,8 +32,6 @@ class Acteur
     public function setId($id)
     {
         $this->id = $id;
-
-        return $this;
     }
 
     /**
@@ -52,8 +50,6 @@ class Acteur
     public function setNom($nom)
     {
         $this->nom = $nom;
-
-        return $this;
     }
 
     /**
@@ -72,8 +68,7 @@ class Acteur
     public function setPrenom($prenom)
     {
         $this->prenom = $prenom;
-
-        return $this;
     }
+
 
 }
