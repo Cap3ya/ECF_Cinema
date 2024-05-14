@@ -1,20 +1,17 @@
 <?php
 
-use Model\entity\Offre;
-use Model\repository\OffreDAO;
+use Model\entity\Film;
+use Model\repository\FilmDAO;
 
 $message = null;
-$offre = null;
+$film = null;
 
-if (isset($_POST['title']) && isset($_POST['description'])) {
+if (isset($_POST['titre']) && isset($_POST['realisateur']) && isset($_POST['affichage']) && isset($_POST['annee']) && isset($_POST['role'])) {
 
-    $offre = new Offre(null, $_POST['title'], $_POST['description']);
+    $film = new Film(0, $_POST['titre'], $_POST['realisateur'], $_POST['affichage'], $_POST['annee'], $_POST['role'], $_POST['acteur']);
 
-    $offreDao = new OffreDAO();
-    $status = $offreDao::addOne($offre);
+    $FilmDao = new FilmDAO();
+    $status = $filmDao::addOne($film);
     $message = $status ? "Ajout OK" : "Erreur Ajout";
 }
-echo $twig->render('creer.html.twig', [
-    'message' => $message,
-    'offre' => $offre
-]);
+echo $twig->render('creer.html.twig');
