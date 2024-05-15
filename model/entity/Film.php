@@ -5,17 +5,16 @@ namespace Model\entity;
 
 class Film
 {
-
-    private $roles;
+    // Tableau pour stocker les objets Role
+    private $roles = [];
     private $id;
     private $titre;
     private $realisateur;
     private $affiche;
     private $annee;
 
-    public function __construct(int $id,string $titre,string $realisateur,string $affiche,string $annee, array $roles)
-    {
-        $this->setRoles($roles);
+    public function __construct(int $id, string $titre, string $realisateur, string $affiche, string $annee)
+    {        
         $this->setId($id);
         $this->setTitre($titre);
         $this->setRealisateur($realisateur);
@@ -57,7 +56,7 @@ class Film
     {
         return $this->annee;
     }
-    
+
     public function setAnne($annee)
     {
         $this->annee = $annee;
@@ -78,9 +77,10 @@ class Film
         return $this->roles;
     }
 
-    public function setRoles($roles)
-    {
-        $this->roles = $roles;
-    }
 
+    public function addRole(Role $role)
+    {
+
+        $this->roles[] = $role;
+    }
 }

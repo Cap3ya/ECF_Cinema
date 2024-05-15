@@ -10,7 +10,7 @@ class Role
     private $personnage;
 
     public function __construct(
-        int $id,
+        int $id = null,
         Acteur $acteur, 
         string $personnage
     )
