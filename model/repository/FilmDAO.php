@@ -12,7 +12,8 @@ class FilmDAO extends Dao
     //Récupérer tous les films 
     public static function getAll(): array
     {
-        $query = self::$bdd->prepare("SELECT f.id as film_id, titre, realisateur, affiche, annee, r.id AS role_id, personnage, a.id AS acteur_id, nom, prenom FROM film AS f INNER JOIN role AS r ON f.id = r.id_film INNER JOIN acteur AS a ON r.id_acteur = a.id" );
+        $query = self::$bdd->prepare("SELECT f.id as film_id, titre, realisateur, affiche, annee, r.id AS 
+        role_id, personnage, a.id AS acteur_id, nom, prenom FROM film AS f INNER JOIN role AS r ON f.id = r.id_film INNER JOIN acteur AS a ON r.id_acteur = a.id" );
         $query->execute();
         $films = array();
 
@@ -22,7 +23,7 @@ class FilmDAO extends Dao
             while ($data = $query->fetch()) {
                 $filmId = $data['film_id'];
                 // Créer une instance de Role
-                $role = new Role($data['role_id'], $filmId, new Acteur($data['acteur_id'], $data['nom'], $data['prenom']), $data['personnage']);
+                $role = new Role($data['role_id'], new Acteur($data['acteur_id'], $data['nom'], $data['prenom']), $data['personnage']);
                 // Si le film n'est pas dans le tableau, on le crée et on l'ajoute
                 if (!isset($films[$filmId])) {
                     $films[$filmId] = new Film($filmId, $data['titre'], $data['realisateur'], $data['affiche'], $data['annee']);
@@ -47,8 +48,8 @@ class FilmDAO extends Dao
     //Ajouter un Role à un film
     public static function addRole($data): bool
     {
-        $requete = 'INSERT INTO role (personnage, id_film, id_acteur) VALUES (:personnage, :id_film, :id_acteur)';
-        $valeurs = ['personnage' => $data->getPersonnage(), 'id_film' => $data->getIdFilm(), 'acteur' => $data->getActeur()];
+        $requete = "INSERT INTO role (id_film, id_acteur, personnage) VALUES (:id_film, :id_acteur, :personnage)";
+        $valeurs = ['id_film' => $data->getIdFilm(), 'acteur' => $data->getActeur(),'personnage' => $data->getPersonnage()];
         $insert = self::$bdd->prepare($requete);
         return $insert->execute($valeurs);
     }
@@ -65,12 +66,12 @@ class FilmDAO extends Dao
             $film = new Film($data['film_id'], $data['titre'], $data['realisateur'], $data['affiche'], $data['annee']);
 
             // Création de la première instance de Role
-            $role = new Role($data['role_id'], $data['film_id'], new Acteur($data['acteur_id'], $data['nom'], $data['prenom']), $data['personnage']);
+            $role = new Role($data['role_id'],  new Acteur($data['acteur_id'], $data['nom'], $data['prenom']), $data['personnage']);
 
             $film->addRole($role);
             while ($data = $query->fetch()) {
                 // Créer une instance de Role
-                $role = new Role($data['role_id'], $$data['film_id'], new Acteur($data['acteur_id'], $data['nom'], $data['prenom']), $data['personnage']);
+                $role = new Role($data['role_id'], new Acteur($data['acteur_id'], $data['nom'], $data['prenom']), $data['personnage']);
 
                 // On ajoutez le rôle à l'instance de film 
                 $film->addRole($role);
