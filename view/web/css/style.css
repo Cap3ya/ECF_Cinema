@@ -1,6 +1,4 @@
 body {
-   color: rgb(226, 226, 240);
-   background-color: black;
    font-family: 'Ubuntu', sans-serif;
    margin: 0px;
 }
@@ -12,6 +10,7 @@ footer {
 }
 
 footer {
+   text-align: center;
    position: fixed;
    bottom: 0px;
 }

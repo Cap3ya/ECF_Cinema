@@ -5,23 +5,28 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="stylesheet" href="view/web/css/style.css" media="screen"/>
 		<link rel="shortcut icon" href="view/web/img/favicon.ico"/>
-		<title>MVC with Twig</title>
+		<title>Médiathèque</title>
 	</head>
 	<body>
-		<header>
-			<p>Ceci est notre header</p>
-			<a href="home">
+		<header style="display:flex; flex-direction:row; align-items:center;">
+
+			<img src="./view/web/img/popcorn.svg" alt="popcorn logo" height="75" width="75">
+			<h1>Médiathèque</h1>
+			<a href="/">
 				<button>Accueil</button>
 			</a>
-			<a href="creer">
-				<button>Créer</button>
-			</a>
 			{% if session.user is defined %}
-				Bonjour
-				{{session.user}}
+				<a href="login">
+					<button>Compte</button>
+				</a>
 			{% else %}
-				L'utilisateur n'est pas connecté
+				<a href="create">
+					<button>Création</button>
+				</a>
 			{% endif %}
 
-		</header><hr></body>
-</html>
+			<form method="post">
+				<input type='text' name="search" placeholder="Rechercher un film">
+				<input type="submit" value="search">
+			</form>
+		</header>
