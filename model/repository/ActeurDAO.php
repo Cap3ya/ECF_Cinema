@@ -4,7 +4,7 @@ namespace Model\repository;
 
 use Model\entity\Acteur;
 // Creé par Eviougeas le 13/5/2024
-class ActeurPDO extends Dao
+class ActeurDAO extends Dao
 
 { //Récupérer tous les acteurs
     public static function getAll(): array
