@@ -11,8 +11,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'search') {
     $films = $filmDAO::getAll("");
 }
 
-var_dump($films);
-
 echo $twig->render('home.html.twig', [
     'films' => $films,
 ]);

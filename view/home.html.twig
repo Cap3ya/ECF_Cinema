@@ -1,0 +1,7 @@
+{% for film in films %}
+	<h2>{{film.getTitre}}</h2>
+	{% for role in film.getRoles %}
+		<p>personnage:
+			{{role.getPersonnage}}</p>
+	{% endfor %}
+{% endfor %}
