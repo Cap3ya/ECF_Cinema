@@ -1,46 +1,86 @@
-<div class="container">
-	<h1>Ajouter un Film</h1>
-	{% if message is not empty %}
-	<p>{{ message }}</p>
-	{% endif %}
+<div class="container mt-0">
+	<h1 class="text-center mb-0">Ajouter un Film</h1>
 	<form method="post">
 		<div class="film">
-			<div>
-				<label for="titre"><b>Titre</b></label>
-				<input type="text" placeholder="Entrez le titre" name="titre" required>
-				<label for="annee"><b>Année</b></label>
-				<input type="text" placeholder="Entrez l'année" name="annee" required>
-
+			<div class="form-row">
+				<div class="form-group col-md-6">
+					<label for="titre"><b>Titre</b></label>
+					<input type="text" class="form-control" id="titre" placeholder="Entrez le titre" name="titre" required>
+				</div>
+				<div class="form-group col-md-6">
+					<label for="annee"><b>Année</b></label>
+					<input type="text" class="form-control" id="annee" placeholder="Entrez l'année" name="annee" required pattern="\d{4}" maxlength="4" title="Veuillez entrer une année valide à quatre chiffres">
+				</div>
 			</div>
-			<div>
+			<div class="form-group">
 				<label for="affiche"><b>Affiche</b></label>
-				<input type="text" placeholder="Entrez l'affiche" name="affiche" required>
+				<input type="text" class="form-control" id="affiche" placeholder="Entrez l'affiche" name="affiche" required>
 			</div>
-			<div>
+			<div class="form-group">
 				<label for="realisateur"><b>Réalisateur</b></label>
-				<input type="text" placeholder="Entrez le réalisateur" name="realisateur" required>
+				<input type="text" class="form-control" id="realisateur" placeholder="Entrez le réalisateur" name="realisateur" required>
 			</div>
-
 		</div>
 		<div>
 			<p>Rôle(s):
-				<button type="button" id="add-role">Ajouter</button>
+				<button type="button" id="add-role" class="btn btn-primary btn-sm">Ajouter</button>
 			</p>
-			<div id="roles">
-				<div>
-					<input type="text" id="personnage_0" name="personnage[]" placeholder="Personnage" required>
-					<input type="text" id="acteur_nom_0" name="acteur_nom[]" placeholder="Nom" required>
-					<input type="text" id="acteur_prenom_0" name="acteur_prenom[]" placeholder="Prénom" required>
-				</div>
-				<div>
-					<input type="text" id="personnage_1" name="personnage[]" placeholder="Personnage" required>
-					<input type="text" id="acteur_nom_1" name="acteur_nom[]" placeholder="Nom" required>
-					<input type="text" id="acteur_prenom_1" name="acteur_prenom[]" placeholder="Prénom" required>
+			<div id="roles" class="form-group col-md-12 p-0">
+				<div class="form-row align-items-center">
+					<div class="form-group col-md-3">
+						<input type="text" class="form-control" id="personnage_0" name="personnage[]" placeholder="Personnage" required>
+					</div>
+					<div class="form-group col-md-3">
+						<input type="text" class="form-control" id="acteur_nom_0" name="acteur_nom[]" placeholder="Nom" required>
+					</div>
+					<div class="form-group col-md-3">
+						<input type="text" class="form-control" id="acteur_prenom_0" name="acteur_prenom[]" placeholder="Prénom" required>
+					</div>
+					<div class="form-group col-md-3"></div>
 				</div>
 			</div>
 		</div>
 		<div>
-			<input type="submit" value="Créer">
+			<input type="submit" class="btn btn-success mt-3" value="Créer">
 		</div>
 	</form>
+	<div>
+		{% if message is not empty %}
+		<p>{{ message }}</p>
+		{% endif %}
+	</div>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+	document.getElementById('add-role').addEventListener('click', function () {
+		var rolesDiv = document.getElementById('roles');
+		var newRoleIndex = rolesDiv.children.length;
+		var newRoleDiv = document.createElement('div');
+		newRoleDiv.classList.add('form-row', 'align-items-center');
+
+		newRoleDiv.innerHTML = `
+			<div class="form-group col-md-3">
+				<input type="text" class="form-control" id="personnage_${newRoleIndex}" name="personnage[]" placeholder="Personnage" required>
+			</div>
+			<div class="form-group col-md-3">
+				<input type="text" class="form-control" id="acteur_nom_${newRoleIndex}" name="acteur_nom[]" placeholder="Nom" required>
+			</div>
+			<div class="form-group col-md-3">
+				<input type="text" class="form-control" id="acteur_prenom_${newRoleIndex}" name="acteur_prenom[]" placeholder="Prénom" required>
+			</div>
+			<div class="form-group col-md-3">
+				<button type="button" class="btn btn-danger btn-sm del-role">Delete</button>
+			</div>
+		`;
+		rolesDiv.appendChild(newRoleDiv);
+	});
+
+	document.getElementById('roles').addEventListener('click', function (e) {
+		if (e.target && e.target.classList.contains('del-role')) {
+			e.target.closest('.form-row').remove();
+		}
+	});
+</script>
