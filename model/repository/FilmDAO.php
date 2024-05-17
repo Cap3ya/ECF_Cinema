@@ -47,6 +47,33 @@ class FilmDAO extends Dao
         return true;
     }
 
+    public static function getAll(): array
+    {
+        $getAllfilm = self::$bdd->prepare('SELECT * FROM film');
+        $getAllfilm->execute();
+
+        $films = [];
+        while ($film = $getAllfilm->fetch()) {
+            //get roles
+            $getRoles = self::$bdd->prepare("SELECT * FROM role WHERE id_film = :id");
+            $getRoles->execute([':id' => $film['id']]);
+
+            $roles = [];
+            while ($role = $getRoles->fetch()) {
+                //get acteurs
+                $getActeur = self::$bdd->prepare("SELECT * FROM acteur WHERE id = :id_acteur");
+                $getActeur->execute(['id_acteur' => $role['id_acteur']]);
+                $acteur = $getActeur->fetch();
+
+                $roles[] = new Role($role['role_id'], new Acteur($acteur['id'], $acteur['nom'], $acteur['prenom']), $role['personnage']);
+            }
+
+            $films[] = new Film($film['id'], $film['titre'], $film['realisateur'], $film['affiche'], $film['annee'], $roles); 
+        }
+
+        return  $films;
+    }
+
     //Ajouter un Role à un film
     public static function addRole($data): bool
     {
@@ -70,41 +97,15 @@ class FilmDAO extends Dao
             // Création de la première instance de Role
             $role = new Role($data['role_id'],  new Acteur($data['acteur_id'], $data['nom'], $data['prenom']), $data['personnage']);
 
-            $film->addRole($role);
+            $film->setRoles($role);
             while ($data = $query->fetch()) {
                 // Créer une instance de Role
                 $role = new Role($data['role_id'], new Acteur($data['acteur_id'], $data['nom'], $data['prenom']), $data['personnage']);
 
                 // On ajoutez le rôle à l'instance de film 
-                $film->addRole($role);
+                $film->setRoles($role);
             }
         }
         return  $film ?? null;
-    }
-
-    //Récupérer tous les films 
-    public static function getAll(): array
-    {
-        $query = self::$bdd->prepare("SELECT f.id as film_id, titre, realisateur, affiche, annee, r.id AS 
-            role_id, personnage, a.id AS acteur_id, nom, prenom FROM film AS f INNER JOIN role AS r ON f.id = r.id_film INNER JOIN acteur AS a ON r.id_acteur = a.id");
-        $query->execute();
-        $films = array();
-
-        // Récupération du premier résultat
-        $data = $query->fetch();
-        if ($data) {
-            while ($data = $query->fetch()) {
-                $filmId = $data['film_id'];
-                // Créer une instance de Role
-                $role = new Role($data['role_id'], new Acteur($data['acteur_id'], $data['nom'], $data['prenom']), $data['personnage']);
-                // Si le film n'est pas dans le tableau, on le crée et on l'ajoute
-                if (!isset($films[$filmId])) {
-                    $films[$filmId] = new Film($filmId, $data['titre'], $data['realisateur'], $data['affiche'], $data['annee']);
-                }
-                // On ajoute le rôle à l'instance de film 
-                $films[$filmId]->addRole($role);
-            }
-        }
-        return  $films ?? null;
     }
 }
