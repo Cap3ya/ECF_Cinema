@@ -14,3 +14,9 @@ footer {
    position: fixed;
    bottom: 0px;
 }
+.form-row .form-group {
+   margin-bottom: 5px; 
+}
+#roles .form-row {
+   margin-bottom: 5px; 
+}
