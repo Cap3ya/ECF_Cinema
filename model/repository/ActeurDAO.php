@@ -1,69 +1,53 @@
 <?php
+
 namespace Model\repository;
 
-use Model\repository\DAO;
-use Model\entity\Film;
 use Model\entity\Acteur;
-use Model\entity\Role;
+// Creé par Eviougeas le 13/5/2024
+class ActeurDAO extends Dao
 
-class FilmDAO extends Dao
-{
-    //Récupérer tous les films 
+{ //Récupérer tous les acteurs
     public static function getAll(): array
     {
-        $query = self::$bdd->prepare("SELECT f.id, titre, realisateur, affiche, annee, r.personnage, a.nom, a.prenom FROM film as f INNER JOIN role as r ON f.id = r.id_film INNER JOIN acteur as A ON r.id_acteur = a.id");
+        $query = self::$bdd->prepare("SELECT * FROM acteur");
         $query->execute();
-        $films = array();
+        $acteurs = [];
 
         while ($data = $query->fetch()) {
-            $films[] = new Film($data['id'], $data['titre'], $data['realisateur'], $data['affiche'], $data['annee'], $data['role']);
+            $acteurs[] = new Acteur($data['id'], $data['nom'], $data['prenom']);
         }
-        return ($films);
+        return $acteurs;
     }
 
-    //Ajouter un film dans la BD ********************************************************
-    // on crée : le film, l'acteur et son rôle
+    //Ajouter un acteur
     public static function addOne($data): bool
     {
-        $requete = 'INSERT INTO film (titre, realisateur, affiche, annee) VALUES (:titre , :realisateur , :affiche, :annee)';
-        $valeurs = ['titre' => $data->getTitre(), 'realisateur' => $data->getRealisateur(), 'affiche' => $data->getAffiche(), 'annee' => $data->getAnnee()];
-        $insert = self::$bdd->prepare($requete);
+        $query = 'INSERT INTO acteur (nom, prenom) VALUES ( :nom, :prenom)';
+        $valeurs = ['nom' => $data->getNom(), 'prenom' => $data->getPrenom()];
+        $insert = self::$bdd->prepare($query);
         return $insert->execute($valeurs);
     }
 
-    //Ajouter un Role à un film
-    public static function addRole($data): bool
+    //Récupérer l'info sur 1 acteur à partir de son id
+    public static function getOne(int $id): ?Acteur
     {
-        $requete = 'INSERT INTO role (personnage, id_film, id_acteur) VALUES (:personnage, :id_film, :id_acteur)';
-        $valeurs = ['personnage' => $data->getPersonnage(), 'id_film' => $data->getIdFilm(), 'acteur' => $data->getActeur()];
-        $insert = self::$bdd->prepare($requete);
-        return $insert->execute($valeurs);
-    }
-
-    //Récupérer info sur 1 film
-    public static function getOne(int $id): Film
-    {
-        $query = self::$bdd->prepare("SELECT f.id as film_id, titre, realisateur, affiche, annee, r.id AS role_id, personnage, a.id AS acteur_id, nom, prenom FROM film AS f INNER JOIN role AS r ON f.id = r.id_film INNER JOIN acteur AS a ON r.id_acteur = a.id WHERE film_id = :id_film");
-        $query->execute([':id_film' => $id]);
-
-        // Récupération du premier résultat
+        $query = self::$bdd->prepare('SELECT * FROM acteur WHERE id = :id');
+        $query->execute([':id' => $id]);
         $data = $query->fetch();
-        if ($data) {
-            $film = new Film($data['film_id'], $data['titre'], $data['realisateur'], $data['affiche'], $data['annee']);
+        return  $data ? new Acteur($data['id'], $data['nom'], $data['prenom']) : null;
+    }
 
-        // Création de la première instance de Role
-        $role = new Role($data['role_id'],$data['film_id'], new Acteur($data['acteur_id'], $data['nom'], $data['prenom']), $data['personnage'] );
+    //Récupérer l'info sur 1 acteur à partir de son nom et prénom
+    public static function getOneFromNomPrenom(string $nom, string $prenom): ?Acteur
+    {
+        // Convertir les noms et prénoms en minuscules pour comparer de manière insensible à la casse
+        $nom = strtolower($nom);
+        $prenom = strtolower($prenom);
 
-        $film->addRole($role);
-        while ($data = $query->fetch()) {
-            // Créer une instance de Role
-            $role = new Role($data['role_id'], $$data['film_id'], new Acteur($data['acteur_id'], $data['nom'], $data['prenom']), $data['personnage']);
-
-            // On ajoutez le rôle à l'instance de film 
-            $film->addRole($role);
-        }
-
-		}
-        return  $film ?? null;		
-	}
+        $query = self::$bdd->prepare('SELECT * FROM acteur WHERE LOWER(nom) = :nom and LOWER(prenom) = :prenom');
+        $valeurs = ['nom' => $nom, 'prenom' => $prenom];
+        $query->execute($valeurs);
+        $data = $query->fetch();
+        return $data ? new Acteur($data['id'], $data['nom'], $data['prenom']) :  null;
+    }
 }
