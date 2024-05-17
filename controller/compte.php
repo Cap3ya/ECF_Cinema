@@ -4,30 +4,29 @@ use Model\repository\UserDAO;
 use Model\entity\User;
 
 $userDAO = new UserDAO();
+$username = $email = $password = $password_confirm = "";
+$username_err = $email_err = $password_err = $password_confirm_err = $message = "";
 
 //LOGIN
 // if user click on login button
 if ($_POST['action'] == 'Login') {
-    // Initialize variables to store input and error messages
-    $email = $password = "";
-    $email_err = $password_err = "";
 
     // Validate email
     if (empty(trim($_POST["email"]))) {
-        $email_err = "Please enter an email.";
+        $email_err = "Veuillez saisir votre email.";
     } else {
         $email = trim($_POST["email"]);
     }
 
     // Validate password
     if (empty(trim($_POST["password"]))) {
-        $password_err = "Please enter a password.";
+        $password_err = "Veuillez saisir votre mot de passe.";
     } else {
         $password = trim($_POST["password"]);
     }
 
     // if logins are valid
-    if (!empty($email) || !empty($password)) {   
+    if (!empty($email) && !empty($password)) {   
         // if user by email exist
         if($userDAO->userByEmailExist($email)) {
             // get user by email
@@ -35,25 +34,24 @@ if ($_POST['action'] == 'Login') {
             // if password is correct
             if(password_verify($_POST['password'], $user->getPassword())) {
             // log the user in
-            $_SESSION['user'] = $user;
-            $message = 'Success';
+            session_start();
+            $_SESSION['user'] = $user->getUsername();
+            header("Location: home");
+            die();
             } else {
-                $message = 'Password do not match';
+                $message = 'Mot de passe incorrect.';
             }
         } else {
-            $message = 'User does not exist';
+            $message = 'Email inccorect.';
         }
     } else {
-        $message = "Provide valid logins";
+        $message = "Veuillez remplir tous les champs.";
     }
 }
 
 // SIGNUP 
 // if user click on Signup button
 if ($_POST['action'] == 'Signup') {
-    // Initialize variables to store input and error messages
-    $username = $email = $password = $password_confirm = "";
-    $username_err = $email_err = $password_err = $password_confirm_err = "";
 
     // Validate username
     if (empty(trim($_POST["username"]))) {
@@ -97,17 +95,20 @@ if ($_POST['action'] == 'Signup') {
         // if user doesn't exist
 
         if ((new UserDAO())::userByEmailExist($email)) {
-            echo "User already exist\n";
+            $message = "L'utilisateur exist déjà";
         } else {
             // add user to db.user
             $password_hash = password_hash($password, PASSWORD_BCRYPT, ['cost' => 12]);
             $userDAO::addOne(new User(0, $username, $email, $password_hash));
-            echo "User successfuly added\n";
+            $message = "Utilisateur ajouté avec succès";
         }
     } else {
-        echo "Form is not valid\n";
+        $message = "Veuillez saisir tous les champs";
     }
-    exit();
+    // exit();
 }
 
-echo $twig->render('compte.html.twig');
+echo $twig->render('compte.html.twig',[
+    'action' => $_POST['action'],
+    'message' => $message,
+]);

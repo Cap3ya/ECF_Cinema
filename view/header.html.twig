@@ -10,13 +10,13 @@
 	<body>
 		<header style="display:flex; flex-direction:row; align-items:center;">
 
-			<img src="./view/web/img/popcorn.svg" alt="popcorn logo" height="50" width="50">
+			<img src="./view/web/img/popcorn.svg" alt="popcorn logo" height="30" width="30">
 			<h1>Médiathèque</h1>
 			<a href="/">
 				<button>Accueil</button>
 			</a>
 			{% if session.user is defined %}
-				<a href="create">
+				<a href="creer">
 					<button>Création</button>
 				</a>
 				<form method='post'>
@@ -33,3 +33,10 @@
 				<input type="submit" name='action' value="search">
 			</form>
 		</header>
+		{% if session.user is defined %}
+			<p>Bienvenue sur note Médiathèque {{session.user}}</p>
+		{% else %}
+			<a href="compte">Connectez vous pour créer des films</a>
+		{% endif %}
+		<hr>
+

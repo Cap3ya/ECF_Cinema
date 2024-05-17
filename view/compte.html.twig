@@ -1,33 +1,60 @@
-<div>
-	<form method="post">
+<main>
+	<form id="form_signup" method="post">
 
 		<h2>Créer un compte</h2>
 
+		{% if action == 'Signup'%}
+		<p>{{message}}</P>
+		{% endif %}
+
 		<label for="username">Nom Utilisateur</label> <br>
-		<input type="text" id="username" name="username"> <br>
+		<input type="text" id="signup_username" name="username" pattern="^[A-Za-z\d]{5,}$" required> <br>
 
 		<label for="email">Email</label> <br>
-		<input type="text" id="email" name="email"> <br>
+		<input type="email" id="signup_email" name="email" required> <br>
 
 		<label for="password">Mot de passe</label> <br>
-		<input type="text" id="password" name="password"> <br>
+		<input type="password" id="signup_password" name="password" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{5,}$" required> <br>
 
 		<label for="password_confirm">Mot de passe (Confirmation)</label> <br>
-		<input type="text" id="password_confirm" name="password_confirm"> <br>
+		<input type="password" id="signup_password_confirm" name="password_confirm" required> <br>
+		<small id="signup_password_confirm_err"></small> <br>
 
-		<input type="submit" value="Signup" name="action">
+		<input id="signup_submit" type="submit" value="Signup" name="action">
 	</form>
 
-	<form method="post">
+	<form id="form_login" method="post">
 
 		<h2>Identification</h2>
 
+		{% if action == 'Login'%}
+		<p>{{message}}</P>
+		{% endif %}
+
 		<label for="email">Email</label> <br>
-		<input type="text" id="email" name="email"> <br>
+		<input type="email" id="login_email" name="email" required> <br>
 
 		<label for="password">Mot de passe</label> <br>
-		<input type="text" id="password" name="password"> <br>
-
-		<input type="submit" value="Login" name="action"></form>
+		<input type="password" id="login_password" name="password" required> <br>
+		<br>
+		
+		<input id="login_submit" type="submit" value="Login" name="action"></form>
 	</form>
-</div>
+</main>
+
+<script>
+const signup_password = document.querySelector('#signup_password');
+const signup_password_confirm = document.querySelector('#signup_password_confirm');
+const signup_password_confirm_err = document.querySelector('#signup_password_confirm_err');
+
+signup_password_confirm.addEventListener('input', (event) => {
+    const mdp1 = signup_password.value;
+    const mdp2 = signup_password_confirm.value;
+
+    if (mdp1 !== mdp2) {
+        signup_password_confirm_err.textContent = "Les mots de passe ne concordent pas"
+    } else {
+        signup_password_confirm_err.textContent = "";
+    }
+})
+</script>
