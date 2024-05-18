@@ -66,12 +66,12 @@ class FilmDAO extends Dao
                 $getActeur->execute(['id_acteur' => $role['id_acteur']]);
                 $acteur = $getActeur->fetch();
 
-                $roles[] = new Role($role['role_id'], new Acteur($acteur['id'], $acteur['nom'], $acteur['prenom']), $role['personnage']);
+                $roles[] = new Role($role['id'], new Acteur($acteur['id'], $acteur['nom'], $acteur['prenom']), $role['personnage']);
             }
 
             $films[] = new Film($film['id'], $film['titre'], $film['realisateur'], $film['affiche'], $film['annee'], $roles); 
         }
-
+        
         return  $films;
     }
 
