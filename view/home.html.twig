@@ -1,7 +1,9 @@
+<main>
 {% for film in films %}
-	<h2>{{film.getTitre}}</h2>
+	<h2>{{film.getId}} - {{film.getTitre}}</h2>
+	<p>Réalisé en <b>{{film.getAnnee}}</b> par <b>{{film.getRealisateur}}</b></p>
 	{% for role in film.getRoles %}
-		<p>personnage:
-			{{role.getPersonnage}}</p>
+			<p>avec <u><i>{{role.getActeur.getPrenom}} {{role.getActeur.getNom}}</i></u> dans le role de <b>{{role.getPersonnage}}</b></p>
 	{% endfor %}
 {% endfor %}
+</main>
