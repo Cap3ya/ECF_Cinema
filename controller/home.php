@@ -6,7 +6,7 @@ $filmDAO = new FilmDAO();
 $films = [];
 
 if (isset($_POST['action']) && $_POST['action'] == 'search') {
-    $filmDAO::getAll($_POST['search']);
+    $films = $filmDAO::getAll($_POST['search']);
 } else {
     $films = $filmDAO::getAll("");
 }
