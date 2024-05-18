@@ -8,13 +8,7 @@ body {
    font-family: 'Ubuntu', sans-serif;
    flex-direction: column;
    display: flex;
-}
-
-main {
-   flex-grow: 1;
-   min-height: 100%;
-}
-
-header, footer {
-   min-height: 100px;
+   & main {
+      flex-grow: 1;
+   }   
 }
