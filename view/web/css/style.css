@@ -1,22 +1,20 @@
+html {
+   height: 100%;
+   & body {
+      min-height: 100%;
+   }
+}
 body {
    font-family: 'Ubuntu', sans-serif;
-   margin: 0px;
+   flex-direction: column;
+   display: flex;
 }
 
-header,
-footer {
-   width: 100%;
-   margin-bottom: 20px;
+main {
+   flex-grow: 1;
+   min-height: 100%;
 }
 
-footer {
-   text-align: center;
-   position: fixed;
-   bottom: 0px;
-}
-.form-row .form-group {
-   margin-bottom: 5px; 
-}
-#roles .form-row {
-   margin-bottom: 5px; 
+header, footer {
+   min-height: 100px;
 }
