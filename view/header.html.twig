@@ -1,43 +1,51 @@
 <!DOCTYPE html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<link rel="stylesheet" href="view/web/css/style.css" media="screen"/>
-		<link rel="shortcut icon" href="view/web/img/favicon.ico"/>
-		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-		<title>Médiathèque</title>
-	</head>
-	<body>
-		<header style="display:flex; flex-direction:row; align-items:center;">
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Médiathèque</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-			<img src="./view/web/img/popcorn.svg" alt="popcorn logo" height="30" width="30">
-			<h1>Médiathèque</h1>
-			<a href="/">
-				<button>Accueil</button>
-			</a>
-			{% if session.user is defined %}
-				<a href="creer">
-					<button>Création</button>
-				</a>
-				<form method='post'>
-					<input type="submit" name='action' value='logout'>
-				</form>
-			{% else %}
-				<a href="compte">
-					<button>Compte</button>
-				</a>
-			{% endif %}
-
-			<form method="post">
-				<input type='text' name="search" placeholder="Rechercher un film">
-				<input type="submit" name='action' value="search">
-			</form>
-		</header>
-		{% if session.user is defined %}
-			<p>Bienvenue sur note Médiathèque {{session.user}}</p>
-		{% else %}
-			<a href="compte">Connectez vous pour créer des films</a>
-		{% endif %}
-		<hr>
+<header class="container-fluid py-3 border-bottom">
+    <div class="row align-items-center">
+        <div class="col-md-8 d-flex align-items-center">
+            <img src="./view/web/img/popcorn.svg" alt="popcorn logo" height="30" width="30" class="mr-2">
+            <h1 class="h4 mb-0 mr-4">Médiathèque</h1>
+            <a href="/" class="btn btn-outline-primary btn-sm mr-2">Accueil</a>
+            {% if session.user is defined %}
+                <a href="creer" class="btn btn-outline-primary btn-sm mr-2">Création</a>
+                <form method="post" class="d-inline-block">
+                    <button type="submit" name="action" value="logout" class="btn btn-outline-danger btn-sm">Logout</button>
+                </form>
+            {% else %}
+                <a href="compte" class="btn btn-outline-primary btn-sm mr-2">Compte</a>
+            {% endif %}
+        </div>
+        <div class="col-md-4">
+            <form method="post" class="form-inline justify-content-end">
+                <input type="text" name="search" placeholder="Rechercher un film" class="form-control form-control-sm mr-2">
+                <button type="submit" name="action" value="search" class="btn btn-primary btn-sm">Search</button>
+            </form>
+        </div>
+    </div>
+    {% if session.user is defined %}
+        <div class="row mt-2">
+            <div class="col-12">
+                <p class="mb-0">Bienvenue sur note Médiathèque, {{session.user}}</p>
+            </div>
+        </div>
+    {% else %}
+        <div class="row mt-2">
+            <div class="col-12">
+                <a href="compte">Connectez-vous pour créer des films</a>
+            </div>
+        </div>
+    {% endif %}
+</header>
+<hr>
 
