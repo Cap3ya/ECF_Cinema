@@ -11,20 +11,13 @@ $username_err = $email_err = $password_err = $password_confirm_err = $message = 
 // if user click on login button
 if (isset($_POST['action']) && $_POST['action'] == 'Login') {
 
-    // Validate email
-    if (empty(trim($_POST["email"]))) {
-        $email_err = "Veuillez saisir votre email.";
+    // Check if fields are empty
+    if (empty(trim($_POST["email"])) || empty(trim($_POST["password"]))) {
+        $message = "Champs requis";
     } else {
         $email = trim($_POST["email"]);
-    }
-
-    // Validate password
-    if (empty(trim($_POST["password"]))) {
-        $password_err = "Veuillez saisir votre mot de passe.";
-    } else {
         $password = trim($_POST["password"]);
     }
-
     // if logins are valid
     if (!empty($email) && !empty($password)) {   
         // if user by email exist
