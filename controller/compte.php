@@ -39,13 +39,13 @@ if (isset($_POST['action']) && $_POST['action'] == 'Login') {
             header("Location: home");
             die();
             } else {
-                $message = 'Mot de passe incorrect.';
+                $message = 'Mot de passe incorrect';
             }
         } else {
-            $message = 'Email inccorect.';
+            $message = 'Identifiant incorrect';
         }
     } else {
-        $message = "Veuillez remplir tous les champs.";
+        $message = "Veuillez remplir tous les champs";
     }
 }
 
@@ -95,7 +95,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'Signup') {
         // if user doesn't exist
 
         if ((new UserDAO())::userByEmailExist($email)) {
-            $message = "L'utilisateur exist déjà";
+            $message = "Email déjà utilisé";
         } else {
             // add user to db.user
             $password_hash = password_hash($password, PASSWORD_BCRYPT, ['cost' => 12]);
