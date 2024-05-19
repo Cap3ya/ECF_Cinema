@@ -1,14 +1,51 @@
 html {
    height: 100%;
-   & body {
-      min-height: 100%;
-   }
 }
+
 body {
+   min-height: 100%;
    font-family: 'Ubuntu', sans-serif;
    flex-direction: column;
    display: flex;
-   & main {
-      flex-grow: 1;
-   }   
+}
+
+main {
+   flex-grow: 1;
+   display: flex;
+   flex-direction: column;
+}
+
+#filmsCarousel {
+   flex: 1;
+}
+
+.carousel-inner .row {
+   margin: 0;
+}
+
+.carousel-inner h2 {
+   margin-top: 0;
+}
+
+.carousel-controls {
+   position: absolute;
+   bottom: 0;
+   left: 50%;
+   transform: translateX(-50%);
+   width: 100%;
+   padding-bottom: 10px;
+}
+
+.filmImg {
+   height: 55vh;
+   width: auto;
+}
+@media (max-width: 768px) {
+   .filmImg {
+       height: 35vh; 
+   }
+   .btn {
+       position: relative; 
+       margin-top: 10px; 
+   }
 }

@@ -3,41 +3,28 @@
         <div class="carousel-inner">
             {% for film in films %}
             <div class="carousel-item {% if loop.first %}active{% endif %}">
-                <div class="container d-flex align-items-center">
-                    <div class="col-md-6">
-                        <h2>{{ film.getId }} - {{ film.getTitre }}</h2>
-                        <p>Réalisé en <b>{{ film.getAnnee }}</b> par <b>{{ film.getRealisateur }}</b></p>
-                        {% for role in film.getRoles %}
-                        <p>avec <u><i>{{ role.getActeur.getPrenom }} {{ role.getActeur.getNom }}</i></u> dans le rôle de <b>{{ role.getPersonnage }}</b></p>
-                        {% endfor %}
-                    </div>
-                    <div class="col-md-6">
-                        <img src="{{film.getAffiche }}" class="img-fluid" alt="{{ film.getTitre }}">
+                <div class="container">
+                    <div class="row align-items-start">
+                        <div class="col-md-6">
+                            <h2>{{ film.getId }} - {{ film.getTitre }}</h2>
+                            <p>Réalisé en <b>{{ film.getAnnee }}</b> par <b>{{ film.getRealisateur }}</b></p>
+                            {% for role in film.getRoles %}
+                            <p>avec <u><i>{{ role.getActeur.getPrenom }} {{ role.getActeur.getNom }}</i></u> dans le
+                                rôle de <b>{{ role.getPersonnage }}</b></p>
+                            {% endfor %}
+                        </div>
+                        <div class="col-md-6">
+                            <img src="{{film.getAffiche }}" class="img-fluid filmImg" alt="{{ film.getTitre }}">
+                        </div>
                     </div>
                 </div>
             </div>
             {% endfor %}
         </div>
-        <div class="carousel-controls mt-4 text-center">
-            <button class="btn btn-primary" type="button" data-target="#filmsCarousel" data-slide="prev">Previous</button>
+        <div class="carousel-controls text-center">
+            <button class="btn btn-primary" type="button" data-target="#filmsCarousel"
+                data-slide="prev">Previous</button>
             <button class="btn btn-primary" type="button" data-target="#filmsCarousel" data-slide="next">Next</button>
         </div>
     </div>
 </main>
-
-<style>
-main {
-    display: flex;
-}
-#filmsCarousel {
-    flex: 1;
-}
-.carousel-controls {
-        position: absolute;
-    bottom: 50px;
-            left: 50%;
-        transform: translateX(-50%);
-}
-</style>
-
-

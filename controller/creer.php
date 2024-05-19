@@ -6,10 +6,12 @@ use Model\entity\Acteur;
 use Model\repository\FilmDAO;
 
 $filmDAO = new FilmDAO();
+$message = null;
 
 //récupérer les données de la twig pour insertion dans les tables: 1 film, 1 oun plusieurs roles et peut être 1 ou plusieurs acteurs
 if (isset($_POST['titre']) && isset($_POST['realisateur']) && isset($_POST['affiche']) &&
     isset($_POST['annee']) && isset($_POST['acteur_nom']) && isset($_POST['acteur_prenom']) && isset($_POST['personnage'])) {
+        
     try {
         //Récupérer Acteurs et Roles
         $roles = [];
@@ -30,4 +32,4 @@ if (isset($_POST['titre']) && isset($_POST['realisateur']) && isset($_POST['affi
 else {
     $message = null;
 }
-echo $twig->render('creer.html.twig');
+echo $twig->render('creer.html.twig', ['message' => $message ]);
