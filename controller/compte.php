@@ -9,7 +9,7 @@ $username_err = $email_err = $password_err = $password_confirm_err = $message = 
 
 //LOGIN
 // if user click on login button
-if ($_POST['action'] == 'Login') {
+if (isset($_POST['action']) && $_POST['action'] == 'Login') {
 
     // Validate email
     if (empty(trim($_POST["email"]))) {
@@ -51,7 +51,7 @@ if ($_POST['action'] == 'Login') {
 
 // SIGNUP 
 // if user click on Signup button
-if ($_POST['action'] == 'Signup') {
+if (isset($_POST['action']) && $_POST['action'] == 'Signup') {
 
     // Validate username
     if (empty(trim($_POST["username"]))) {
@@ -109,6 +109,6 @@ if ($_POST['action'] == 'Signup') {
 }
 
 echo $twig->render('compte.html.twig',[
-    'action' => $_POST['action'],
+    'action' => isset($_POST['action']) ? $_POST['action'] : "",
     'message' => $message,
 ]);
